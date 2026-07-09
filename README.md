@@ -20,13 +20,23 @@ The goal of this project is to learn and explore the architecture and implementa
 - CMake 3.20+
 - OpenGL 4.6 capable GPU
 
+## Installation of GLFW dependencies
+```bash
+sudo apt install libwayland-dev libxkbcommon-dev xorg-dev
+```
+
 ## Building
 
 Clone the repository:
-
 ```bash
 git clone <repository-url>
 cd game_engine
+```
+
+Sync submodules:
+```bash
+git submodule init
+git submodule update
 ```
 
 Configure and build:
