@@ -19,6 +19,7 @@ target_include_directories(glad PUBLIC
 add_library(engine
     engine/src/core/window.cc
     engine/src/context/openglcontext.cc
+    engine/src/rendering/renderer.cc
 )
 
 target_include_directories(engine PUBLIC
