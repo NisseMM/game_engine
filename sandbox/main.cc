@@ -11,7 +11,7 @@ int main()
         "Engine",
         true};
     
-    Renderer renderer{};
+    Renderer renderer{Color{1.0, 0.0, 1.0, 1.0}};
 
     while (not window.shouldClose())
     {
