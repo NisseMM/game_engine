@@ -1,6 +1,7 @@
-#include <glad/gl.h>
-#include <iostream>
 #include <core/window.h>
+#include <rendering/renderer.h>
+
+#include <iostream>
 
 int main()
 {
@@ -9,19 +10,12 @@ int main()
         720,
         "Engine",
         true};
-        
-    std::cout << "GPU: "
-              << glGetString(GL_RENDERER)
-              << "\n";
+    
+    Renderer renderer{};
 
-    std::cout << "OpenGL: "
-              << glGetString(GL_VERSION)
-              << "\n";
-            
     while (not window.shouldClose())
     {
-        window.makeContextCurrent();
-        glClear(GL_COLOR_BUFFER_BIT);
+        renderer.render(window);
         window.update();
     }
 }
