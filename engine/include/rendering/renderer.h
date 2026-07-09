@@ -6,6 +6,14 @@
 // Window forward declare
 class Window;
 
+/**
+ * @brief Struct representing a Viewport used for rendering.
+ *
+ * @param x X coord for Viewport as an int
+ * @param y Y coord for Viewport as an int
+ * @param width Width for Viewport as an int
+ * @param height Height for Viewport as an int
+ */
 struct Viewport
 {
     int x;
@@ -14,6 +22,14 @@ struct Viewport
     int height;
 };
 
+/**
+ * @brief Struct representing a Color used for clearing when rendering.
+ *
+ * @param r Red amount as a float. 0.0 is no color, 1.0 is full color
+ * @param g Green amount as a float. 0.0 is no color, 1.0 is full color
+ * @param b Blue amount as a float. 0.0 is no color, 1.0 is full color
+ * @param a Opacity amount as a float. 0.0 is no opacity, 1.0 is full opacity
+ */
 struct Color
 {
     float r;
@@ -23,24 +39,69 @@ struct Color
 };
 
 // Default values for Viewport and Color
-static constexpr Viewport DEFAULT_VIEWPORT{0, 0, 1280, 720};
-static constexpr Color DEFAULT_COLOR{0.f, 0.f, 0.f, 1.f};
+inline constexpr Viewport DEFAULT_VIEWPORT{0, 0, 1280, 720};
+inline constexpr Color DEFAULT_COLOR{0.f, 0.f, 0.f, 1.f};
 
 class Renderer
 {
 public:
+    /**
+     * @brief Default constructor sets both Viewport and Color to DEFAULT defined constants.
+     */
     Renderer();
-    Renderer(Color const& color);
-    Renderer(Viewport const& viewport);
-    Renderer(Color const& color, Viewport const& viewport);
 
-    Renderer& setViewport(Viewport const& viewport);
-    Renderer& setClearColor(Color const& color);
+    /**
+     * @brief Sets Color to input and Viewport to DEFAULT defined constant.
+     *
+     * @param color A Color struct that represents the new color for clearing.
+     */
+    Renderer(Color const &color);
 
+    /**
+     * @brief Sets Color to DEFAULT defined constant and Viewport to input.
+     *
+     * @param viewport A Viewport struct that represents the new viewport.
+     */
+    Renderer(Viewport const &viewport);
+
+    /**
+     * @brief Sets Color and Viewport to input.
+     *
+     * @param color A Color struct that represents the new color for clearing.
+     * @param viewport A Viewport struct that represents the new viewport.
+     */
+    Renderer(Color const &color, Viewport const &viewport);
+
+    /**
+     * @brief Updates the internal Viewport.
+     *
+     * @param viewport A Viewport struct.
+     */
+    Renderer &setViewport(Viewport const &viewport);
+
+    /**
+     * @brief Updates the internal color for clearing.
+     *
+     * @param color A Color struct.
+     */
+    Renderer &setClearColor(Color const &color);
+
+    /**
+     * @brief Renders to the window context that is given.
+     *
+     * @param window A Window object containing a context that will be set to current for rendering.
+     */
     void render(Window const &window) const;
 
 private:
+    /**
+     * @brief A Color struct used as clear color.
+     */
     Color clear_color_;
+
+    /**
+     * @brief A Viewport struct used as viewport for rendering.
+     */
     Viewport viewport_;
 };
 
