@@ -2,10 +2,12 @@
 #define WINDOW_H
 
 #include <string>
-#include <cstddef>
+#include <memory>
 
 // Forward declare for GLFWwindow pointer
 struct GLFWwindow;
+// Forward declare for OpenGLContext pointer
+class OpenGLContext;
 
 /**
  * @brief Wrapper around a native application window.
@@ -62,6 +64,11 @@ public:
   bool shouldClose() const;
 
   /**
+   * @brief Makes the windows context current.
+   */
+  void makeContextCurrent() const;
+
+  /**
    * @brief Updates the window state.
    */
   void update();
@@ -75,9 +82,16 @@ private:
   GLFWwindow *window_;
 
   /**
+   * @brief OpenGLContext handle.
+   *
+   * Owned by this class.
+   */
+  std::unique_ptr<OpenGLContext> context_;
+
+  /**
    * @brief Number of active windows
    *
-   * Used to manage GLFW lifetime. 
+   * Used to manage GLFW lifetime.
    * GLFW is terminated when last window is destroyed.
    */
   static int window_count_;
