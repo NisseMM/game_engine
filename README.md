@@ -80,8 +80,12 @@ external/
 
 - ✅ GLFW integration
 - ✅ GLAD integration
+- ✅ OpenGL context management
 - 🔄 Window system
-- ⬜ Renderer
+- 🔄 Renderer
 - ⬜ Shader system
+- ⬜ Buffer abstraction (VAO/VBO/EBO)
+- ⬜ Mesh system
+- ⬜ Camera
 - ⬜ Entity/Component system
 - ⬜ Asset pipeline
