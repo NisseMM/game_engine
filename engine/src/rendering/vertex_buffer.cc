@@ -2,7 +2,7 @@
 
 #include <glad/gl.h>
 
-VertexBuffer::VertexBuffer(std::initializer_list<float> list)
+VertexBuffer::VertexBuffer()
     : buffer_object_{0}
 {
     glGenBuffers(1, &buffer_object_);

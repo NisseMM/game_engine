@@ -14,11 +14,11 @@ void VertexLayout::addAttrib(int index, bool normalize)
 {
     size_t offset{stride_};
     stride_ += LayoutTraits<T>::size();
-    attributes_.push_back(make_attrib(index, offset, normalize));
+    attributes_.push_back(make_attrib<T>(index, offset, normalize));
 }
 
 template <typename T>
 void VertexLayout::addAttrib(bool normalize)
 {
-    addAttrib(attributes_.size(), normalize);
+    addAttrib<T>(attributes_.size(), normalize);
 }
