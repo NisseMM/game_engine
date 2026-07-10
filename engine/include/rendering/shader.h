@@ -4,8 +4,10 @@
 #include <string>
 #include <vector>
 #include <initializer_list>
+#include <stdexcept>
 
 #include <math/math.h>
+#include <math/uniform_traits.h>
 
 enum class ShaderType
 {
@@ -37,6 +39,16 @@ public:
     ShaderProgram& operator=(ShaderProgram&& other) noexcept;
 
     void bind() const;
+
+    template<typename T>
+    void set(std::string const& name, T const& value)
+    {
+        int location{glGetUniformLocation(program_id_, name.c_str())};
+        if (location == -1)
+            throw std::runtime_error("Cannot find location for '" + name + "'");
+        UniformTraits<T>::upload(location, value);
+    }
+
 
 private:
     unsigned int program_id_;
