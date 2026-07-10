@@ -26,15 +26,74 @@ ShaderProgram::ShaderProgram(std::initializer_list<ShaderStage> stages)
     for (auto const& stage : stages)
     {
         unsigned int shader = glCreateShader(SHADER_MAPPING.at(stage.type));
-        std::string shader_src{read_file(stage.path).c_str()};
-        char const* shader_src_c{shader_src.c_str()};
-        glShaderSource(shader, 1, &shader_src_c, NULL);
-        glCompileShader(shader);
+        compileShader(shader, stage.path);
         glAttachShader(program_id_, shader);
         glDeleteShader(shader);
     }
 
+    linkProgram();
+}
+
+void ShaderProgram::compileShader(unsigned int shader, std::string const& path) const
+{
+    std::string shader_src{read_file(path)};
+    char const* shader_src_c{shader_src.c_str()};
+    glShaderSource(shader, 1, &shader_src_c, NULL);
+    glCompileShader(shader);
+
+    if (not compilationSuccess(shader))
+    {
+        throw std::runtime_error(shaderLogs(shader));
+    }
+}
+
+bool ShaderProgram::compilationSuccess(unsigned int shader) const
+{
+    int compile_good{0};
+    glGetShaderiv(shader,  GL_COMPILE_STATUS, &compile_good);
+    return compile_good != 0;
+}
+
+std::string readLog(unsigned int id, auto getiv, auto getlog)
+{
+    int length{};
+    getiv(id,  GL_INFO_LOG_LENGTH, &length);
+    
+    if (length == 0)
+        return "Log missing";
+
+    std::string log(length, '\0');
+    int log_size{};
+    getlog(id, length, &log_size, log.data());
+    log.resize(log_size);
+    return log;
+}
+
+std::string ShaderProgram::shaderLogs(unsigned int shader) const
+{
+    return readLog(shader, glGetShaderiv, glGetShaderInfoLog);
+}
+
+void ShaderProgram::linkProgram() const
+{
     glLinkProgram(program_id_);
+
+    if (not linkSuccess())
+    {
+        throw std::runtime_error(programLogs());
+    }
+}
+
+bool ShaderProgram::linkSuccess() const
+{
+    int link_good{0};
+    glGetProgramiv(program_id_,  GL_LINK_STATUS, &link_good);
+    return link_good != 0;
+}
+
+std::string ShaderProgram::programLogs() const
+{
+    return readLog(program_id_, glGetProgramiv, glGetProgramInfoLog);
 }
 
 ShaderProgram::~ShaderProgram()

@@ -32,6 +32,15 @@ public:
 
 private:
     unsigned int program_id_;
+
+    void compileShader(unsigned int shader, std::string const& path) const;
+    bool compilationSuccess(unsigned int shader) const;
+    std::string shaderLogs(unsigned int shader) const;
+    
+
+    void linkProgram() const;
+    bool linkSuccess() const;
+    std::string programLogs() const;
 };
 
 #endif //SHADER_H
