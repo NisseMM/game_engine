@@ -5,7 +5,7 @@
 #include <vector>
 #include <initializer_list>
 
-// #include <math/math.h>
+#include <math/math.h>
 
 enum class ShaderType
 {
@@ -29,6 +29,14 @@ public:
     ShaderProgram(std::initializer_list<ShaderStage> stages);
 
     ~ShaderProgram();
+
+    ShaderProgram(const ShaderProgram&) = delete;
+    ShaderProgram& operator=(const ShaderProgram&) = delete;
+
+    ShaderProgram(ShaderProgram&& other) noexcept;
+    ShaderProgram& operator=(ShaderProgram&& other) noexcept;
+
+    void bind() const;
 
 private:
     unsigned int program_id_;

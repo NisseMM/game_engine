@@ -12,14 +12,6 @@ const std::map<ShaderType, int> SHADER_MAPPING{
     {ShaderType::GEOM, GL_GEOMETRY_SHADER}
 };
 
-std::string read_file(std::string const& path)
-{
-    std::ifstream ifs{path};
-    std::ostringstream buffer{};
-    buffer << ifs.rdbuf();
-    return buffer.str();
-}
-
 ShaderProgram::ShaderProgram(std::initializer_list<ShaderStage> stages)
     : program_id_{glCreateProgram()}
 {
@@ -34,9 +26,38 @@ ShaderProgram::ShaderProgram(std::initializer_list<ShaderStage> stages)
     linkProgram();
 }
 
+ShaderProgram::ShaderProgram(ShaderProgram && other) noexcept
+    : program_id_{0}
+{
+    *this = std::move(other);
+}
+
+ShaderProgram& ShaderProgram::operator=(ShaderProgram && other) noexcept
+{
+    std::swap(program_id_, other.program_id_);
+    return *this;
+}
+
+void ShaderProgram::bind() const
+{
+    glUseProgram(program_id_);
+}
+
+std::string readFile(std::string const& path)
+{
+    std::ifstream ifs{path};
+
+    if (not ifs)
+        throw std::runtime_error("Could not open file: " + path);
+
+    std::ostringstream buffer{};
+    buffer << ifs.rdbuf();
+    return buffer.str();
+}
+
 void ShaderProgram::compileShader(unsigned int shader, std::string const& path) const
 {
-    std::string shader_src{read_file(path)};
+    std::string shader_src{readFile(path)};
     char const* shader_src_c{shader_src.c_str()};
     glShaderSource(shader, 1, &shader_src_c, NULL);
     glCompileShader(shader);
