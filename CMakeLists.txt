@@ -22,6 +22,9 @@ add_library(engine
     engine/src/context/openglcontext.cc
     engine/src/rendering/renderer.cc
     engine/src/rendering/shader.cc
+    engine/src/rendering/vertex_array.cc
+    engine/src/rendering/vertex_buffer.cc
+    engine/src/rendering/vertex_layout.cc
 )
 
 target_include_directories(engine PUBLIC
