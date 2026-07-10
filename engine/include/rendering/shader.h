@@ -5,8 +5,7 @@
 #include <vector>
 #include <initializer_list>
 
-#include <math/math.h>
-#include <glad/gl.h>
+// #include <math/math.h>
 
 enum class ShaderType
 {
@@ -29,8 +28,10 @@ class ShaderProgram
 public:
     ShaderProgram(std::initializer_list<ShaderStage> stages);
 
+    ~ShaderProgram();
+
 private:
-    size_t progam_id_;
+    unsigned int program_id_;
 };
 
 #endif //SHADER_H
