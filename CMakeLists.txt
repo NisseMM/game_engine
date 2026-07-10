@@ -28,7 +28,7 @@ target_include_directories(engine PUBLIC
     engine/include
 )
 
-target_link_libraries(engine PRIVATE
+target_link_libraries(engine PUBLIC
     glfw
     glad
     glm::glm
