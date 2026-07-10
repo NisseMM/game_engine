@@ -7,6 +7,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 add_subdirectory(external/glfw)
+add_subdirectory(external/glm)
 
 add_library(glad
     external/glad/src/gl.c
@@ -26,16 +27,20 @@ target_include_directories(engine PUBLIC
     engine/include
 )
 
-target_link_libraries(engine PUBLIC
+target_link_libraries(engine PRIVATE
     glfw
     glad
-    dl
+    glm::glm
 )
+
+if(UNIX AND NOT APPLE)
+    target_link_libraries(engine PRIVATE dl)
+endif()
 
 add_executable(GameEngine
     sandbox/main.cc
 )
 
-target_link_libraries(GameEngine
+target_link_libraries(GameEngine PRIVATE
     engine
 )
