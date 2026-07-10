@@ -21,6 +21,7 @@ add_library(engine
     engine/src/core/window.cc
     engine/src/context/openglcontext.cc
     engine/src/rendering/renderer.cc
+    engine/src/rendering/shader.cc
 )
 
 target_include_directories(engine PUBLIC
