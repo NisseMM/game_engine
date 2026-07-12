@@ -15,6 +15,11 @@ VertexBuffer::VertexBuffer(std::initializer_list<float> list)
     upload(list);
 }
 
+VertexBuffer::~VertexBuffer()
+{
+    glDeleteBuffers(1, &buffer_object_);
+}
+
 void VertexBuffer::bind() const
 {
     glBindBuffer(GL_ARRAY_BUFFER, buffer_object_);
