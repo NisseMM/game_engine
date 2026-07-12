@@ -25,6 +25,8 @@ add_library(engine
     engine/src/rendering/vertex_array.cc
     engine/src/rendering/vertex_buffer.cc
     engine/src/rendering/vertex_layout.cc
+    engine/src/rendering/index_buffer.cc
+    engine/src/rendering/mesh.cc
 )
 
 target_include_directories(engine PUBLIC
