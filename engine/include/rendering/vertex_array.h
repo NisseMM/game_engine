@@ -7,6 +7,8 @@ class VertexLayout;
 
 class VertexBuffer;
 
+class IndexBuffer;
+
 class VertexArray
 {
 public:
@@ -22,6 +24,8 @@ public:
     void addBuffer(VertexBuffer const &buffer, VertexLayout const &layout);
 
     void bind() const;
+
+    void setIndexBuffer(IndexBuffer const& ebo);
 
 private:
     unsigned int array_object_;

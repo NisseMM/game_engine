@@ -1,6 +1,7 @@
 #include <rendering/vertex_array.h>
 #include <rendering/vertex_layout.h>
 #include <rendering/vertex_buffer.h>
+#include <rendering/index_buffer.h>
 
 #include <glad/gl.h>
 
@@ -16,7 +17,7 @@ VertexArray::~VertexArray()
 }
 
 VertexArray::VertexArray(VertexArray&& other) noexcept
-    : array_object_{}
+    : VertexArray{}
 {
     *this = std::move(other);
 }
@@ -50,4 +51,10 @@ void VertexArray::addBuffer(VertexBuffer const &buffer, VertexLayout const &layo
 void VertexArray::bind() const
 {
     glBindVertexArray(array_object_);
+}
+
+void VertexArray::setIndexBuffer(IndexBuffer const& ebo)
+{
+    bind();
+    ebo.bind();
 }
