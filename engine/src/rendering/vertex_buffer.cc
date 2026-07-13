@@ -20,6 +20,18 @@ VertexBuffer::~VertexBuffer()
     glDeleteBuffers(1, &buffer_object_);
 }
 
+VertexBuffer::VertexBuffer(VertexBuffer&& other) noexcept
+    : buffer_object_{}
+{
+    *this = std::move(other);
+}
+
+VertexBuffer& VertexBuffer::operator=(VertexBuffer&& other) noexcept
+{
+    std::swap(buffer_object_, other.buffer_object_);
+    return *this;
+}
+
 void VertexBuffer::bind() const
 {
     glBindBuffer(GL_ARRAY_BUFFER, buffer_object_);
@@ -28,9 +40,4 @@ void VertexBuffer::bind() const
 void VertexBuffer::upload(std::initializer_list<float> list)
 {
     glBufferData(GL_ARRAY_BUFFER, list.size() * sizeof(float), list.begin(), GL_STATIC_DRAW);
-}
-
-void VertexBuffer::upload(std::vector<float> const &list)
-{
-    glBufferData(GL_ARRAY_BUFFER, list.size() * sizeof(float), list.data(), GL_STATIC_DRAW);
 }
