@@ -3,8 +3,13 @@
 
 #include <cstddef>
 
+
 // Window forward declare
 class Window;
+class Transform;
+class Camera;
+class Mesh;
+class ShaderProgram;
 
 /**
  * @brief Struct representing a Viewport used for rendering.
@@ -87,11 +92,13 @@ public:
     Renderer &setClearColor(Color const &color);
 
     /**
-     * @brief Renders to the window context that is given.
+     * @brief Begins a new frame render to the window context that is given.
      *
      * @param window A Window object containing a context that will be set to current for rendering.
      */
-    void render(Window const &window) const;
+    void beginFrame(Window const &window) const;
+
+    void draw(Mesh const& mesh, Transform const& transform, Camera const& camera, ShaderProgram const& shader) const;
 
 private:
     /**

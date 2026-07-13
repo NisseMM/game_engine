@@ -1,4 +1,8 @@
 #include <rendering/renderer.h>
+#include <rendering/shader.h>
+#include <rendering/mesh.h>
+#include <scene/camera.h>
+#include <scene/transform.h>
 #include <core/window.h>
 
 #include <glad/gl.h>
@@ -17,7 +21,9 @@ Renderer::Renderer(Viewport const& viewport)
 
 Renderer::Renderer(Color const& color, Viewport const& viewport)
     : clear_color_{color}, viewport_{viewport}
-{}
+{
+    glEnable(GL_DEPTH_TEST);
+}
 
 Renderer& Renderer::setViewport(Viewport const& viewport)
 {
@@ -31,10 +37,21 @@ Renderer& Renderer::setClearColor(Color const& color)
     return *this;
 }
 
-void Renderer::render(Window const& window) const
+void Renderer::beginFrame(Window const& window) const
 {
     window.makeContextCurrent();
     glViewport(viewport_.x, viewport_.y, viewport_.width, viewport_.height);
     glClearColor(clear_color_.r, clear_color_.g, clear_color_.b, clear_color_.a);
-    glClear(GL_COLOR_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+}
+
+void Renderer::draw(Mesh const& mesh, Transform const& transform, Camera const& camera, ShaderProgram const& shader) const
+{
+    shader.bind();
+
+    shader.set("u_Model", transform.matrix());
+    shader.set("u_View", camera.view());
+    shader.set("u_Projection", camera.projection());
+
+    mesh.draw();
 }
