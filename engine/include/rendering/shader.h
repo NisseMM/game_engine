@@ -41,7 +41,7 @@ public:
     void bind() const;
 
     template<typename T>
-    void set(std::string const& name, T const& value)
+    void set(std::string const& name, T const& value) const
     {
         int location{glGetUniformLocation(program_id_, name.c_str())};
         if (location == -1)
