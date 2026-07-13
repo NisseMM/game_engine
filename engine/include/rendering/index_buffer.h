@@ -9,8 +9,15 @@ class IndexBuffer
 public:
     IndexBuffer();
     IndexBuffer(std::initializer_list<unsigned int> list);
+    IndexBuffer(std::vector<unsigned int> list);
     ~IndexBuffer();
     
+    IndexBuffer(IndexBuffer const&) = delete;
+    IndexBuffer& operator=(IndexBuffer const&) = delete;
+
+    IndexBuffer(IndexBuffer&& other) noexcept;
+    IndexBuffer& operator=(IndexBuffer&& other) noexcept;
+
     void bind() const;
     void upload() const;
 

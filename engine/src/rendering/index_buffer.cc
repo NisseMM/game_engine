@@ -18,10 +18,32 @@ IndexBuffer::IndexBuffer(std::initializer_list<unsigned int> list)
     count_ = list.size();
 }
 
+IndexBuffer::IndexBuffer(std::vector<unsigned int> list)
+    : IndexBuffer{}
+{
+    bind();
+    upload(list);
+    count_ = list.size();
+}
+
 IndexBuffer::~IndexBuffer()
 {
     glDeleteBuffers(1, &buffer_object_);
 }
+
+IndexBuffer::IndexBuffer(IndexBuffer&& other) noexcept
+    : buffer_object_{}, count_{}
+{
+    *this = std::move(other);
+}
+
+IndexBuffer& IndexBuffer::operator=(IndexBuffer&& other) noexcept
+{
+    std::swap(buffer_object_, other.buffer_object_);
+    std::swap(count_, other.count_);
+    return *this;
+}
+
 
 void IndexBuffer::bind() const
 {
