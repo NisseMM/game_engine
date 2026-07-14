@@ -81,11 +81,21 @@ external/
 - ✅ GLFW integration
 - ✅ GLAD integration
 - ✅ OpenGL context management
-- 🔄 Window system
-- 🔄 Renderer
-- ⬜ Shader system
-- ⬜ Buffer abstraction (VAO/VBO/EBO)
-- ⬜ Mesh system
-- ⬜ Camera
+- ✅ Window system
+- ✅ Time system
+- ✅ Buffer abstraction (VAO/VBO/EBO)
+- ✅ Vertex layout system
+- ✅ Shader system
+- ✅ Mesh system
+- ✅ OBJ parsing
+- ✅ OBJ → Mesh conversion
+- 🔄 Renderer implementation
+- 🔄 Camera system
+- 🔄 Transform system
+- 🔄 Application/game loop
+- ⬜ Texture system
+- ⬜ Material system
+- ⬜ Input system
 - ⬜ Entity/Component system
-- ⬜ Asset pipeline
+- ⬜ Scene management
+- ⬜ Animation system
