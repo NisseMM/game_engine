@@ -19,6 +19,7 @@ target_include_directories(glad PUBLIC
 
 add_library(engine
     engine/src/core/window.cc
+    engine/src/core/time.cc
     engine/src/context/openglcontext.cc
     engine/src/rendering/renderer.cc
     engine/src/rendering/shader.cc
@@ -27,6 +28,9 @@ add_library(engine
     engine/src/rendering/vertex_layout.cc
     engine/src/rendering/index_buffer.cc
     engine/src/rendering/mesh.cc
+    engine/src/scene/transform.cc
+    engine/src/scene/camera.cc
+    engine/src/asset/model_loader.cc
 )
 
 target_include_directories(engine PUBLIC
