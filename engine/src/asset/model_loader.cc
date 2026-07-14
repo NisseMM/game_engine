@@ -96,7 +96,7 @@ Mesh ModelLoader::createMesh() const
     for (auto const& face : faces_)
     {
         std::ostringstream key{};
-        key << face.v << face.n << face.t;
+        key << face.v << "/" << face.n << "/" << face.t;
 
         if (index_map.find(key.str()) != index_map.end())
         {
