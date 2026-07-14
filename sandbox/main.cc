@@ -12,6 +12,8 @@
 #include <asset/model_loader.h>
 
 #include <iostream>
+#include <chrono>
+#include <thread>
 
 #include <math/math.h>
 
@@ -22,7 +24,7 @@ int main()
         720,
         "Engine",
         true};
-    
+
     window.makeContextCurrent();
     Renderer renderer{Color{1.0, 0.0, 1.0, 1.0}};
 
@@ -43,15 +45,25 @@ int main()
     camera.transform().translate({0.0f, 15.0f, 25.0f});
     camera.transform().rotate({-25.0f, 0.0f, 0.0f});
     Time time{};
-    time.setFps(144);
-
+    time.setFps(360);
+    float SECONDS_PER_UPDATE{1 / 144.0};
     teapot_transform.rotate({270.0f, 0.0f, 0.0f});
 
+    float lag{0.0f};
     while (not window.shouldClose())
     {
         time.beginFrame();
         float delta = time.deltaTime();
-        teapot_transform.rotate({0.0f, 0.0f, 10.0f * delta});
+        lag += delta;
+
+        while (lag >= SECONDS_PER_UPDATE)
+        {
+            //update
+            teapot_transform.rotate({0.0f, 0.0f, 1.0f});
+
+            lag -= SECONDS_PER_UPDATE;
+        }
+
         renderer.beginFrame(window);
         renderer.draw(mesh, teapot_transform, camera, shader);
         window.update();
